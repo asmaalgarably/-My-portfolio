@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% load static %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asma Al-Garably — AI Integration Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="icon" href="{% static 'core/images/favicon.ico' %}" type="image/x-icon">
+<style>
+  :root {
+    --bg: #080D1A;
+    --bg-card: #0F1629;
+    --bg-hover: #151E35;
+    --accent: #00D4FF;
+    --accent-dim: rgba(0, 212, 255, 0.12);
+    --accent-glow: rgba(0, 212, 255, 0.35);
+    --text: #E8EDF5;
+    --text-muted: #7A8BA8;
+    --text-dim: #3D4F6B;
+    --border: rgba(0, 212, 255, 0.1);
+    --border-hover: rgba(0, 212, 255, 0.3);
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.2rem 0;
+    background: rgba(8, 13, 26, 0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    transition: padding 0.3s;
+  }
+
+  .nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  .nav-cv {
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    border: 1px solid var(--border-hover);
+    padding: 0.4rem 1rem;
+    border-radius: 4px;
+    letter-spacing: 0.04em;
+    transition: background 0.2s, box-shadow 0.2s;
+  }
+
+  .nav-cv:hover {
+    background: var(--accent-dim);
+    box-shadow: 0 0 18px var(--accent-glow);
+  }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #neural-canvas {
+    position: absolute;
+    inset: 0;
+    opacity: 0.35;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    padding-top: 5rem;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero-name {
+    font-family: var(--font-display);
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-name .accent { color: var(--accent); }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    font-weight: 300;
+    color: var(--text-muted);
+    margin-bottom: 1.8rem;
+    letter-spacing: -0.01em;
+  }
+
+  .hero-bio {
+    max-width: 540px;
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--accent);
+    color: var(--bg);
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 0.75rem 1.8rem;
+    border-radius: 4px;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: box-shadow 0.25s, transform 0.2s;
+  }
+
+  .btn-primary:hover {
+    box-shadow: 0 0 28px var(--accent-glow);
+    transform: translateY(-1px);
+  }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid var(--border-hover);
+    color: var(--text);
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0.75rem 1.8rem;
+    border-radius: 4px;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .btn-outline:hover {
+    background: var(--accent-dim);
+    border-color: var(--accent);
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--text-dim);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    animation: bounce 2s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+  }
+
+  /* ─── SECTION COMMON ─── */
+  section { padding: 5.5rem 0; }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 3.5rem;
+    line-height: 1.1;
+  }
+
+  .section-title span { color: var(--accent); }
+
+  /* ─── ABOUT ─── */
+  #about { background: var(--bg); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .about-text p {
+    color: var(--text-muted);
+    margin-bottom: 1.2rem;
+    font-size: 0.975rem;
+    line-height: 1.85;
+  }
+
+  .about-text p strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+  }
+
+  .stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.4rem;
+    transition: border-color 0.2s;
+  }
+
+  .stat-card:hover { border-color: var(--border-hover); }
+
+  .stat-number {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  /* ─── SKILLS ─── */
+  #skills { background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .skill-category {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.6rem;
+    transition: border-color 0.2s;
+  }
+
+  .skill-category:hover { border-color: var(--border-hover); }
+
+  .skill-cat-title {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+  }
+
+  .skill-item {
+    margin-bottom: 1rem;
+  }
+
+  .skill-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.35rem;
+  }
+
+  .skill-name {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .skill-pct {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+  }
+
+  .skill-bar {
+    height: 3px;
+    background: var(--bg-hover);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .skill-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), rgba(0, 212, 255, 0.5));
+    border-radius: 2px;
+    width: 0;
+    transition: width 1.2s cubic-bezier(.4,0,.2,1);
+  }
+
+  /* ─── PROJECTS ─── */
+  #projects { background: var(--bg); }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .project-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 212, 255, 0.08);
+  }
+
+  .project-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .project-icon {
+    width: 44px;
+    height: 44px;
+    background: var(--accent-dim);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .project-links {
+    display: flex;
+    gap: 0.6rem;
+  }
+
+  .project-link {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .project-link:hover { color: var(--accent); }
+
+  .project-title {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+
+  .project-desc {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.75;
+    flex-grow: 1;
+  }
+
+  .tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .tech-tag {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    background: var(--accent-dim);
+    padding: 0.2rem 0.55rem;
+    border-radius: 3px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ─── CONTACT ─── */
+  #contact { background: var(--bg-card); border-top: 1px solid var(--border); }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .contact-info h3 {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+  }
+
+  .contact-info p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.2s;
+  }
+
+  .contact-link:hover { color: var(--accent); }
+
+  .contact-link i {
+    width: 18px;
+    text-align: center;
+    color: var(--accent);
+  }
+
+  /* ─── FORM ─── */
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .form-group label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.75rem 1rem;
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+    resize: vertical;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    border-color: var(--accent);
+  }
+
+  .form-group textarea { min-height: 120px; }
+
+  .btn-submit {
+    background: var(--accent);
+    color: var(--bg);
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    align-self: flex-start;
+    transition: box-shadow 0.25s, transform 0.2s;
+  }
+
+  .btn-submit:hover {
+    box-shadow: 0 0 28px var(--accent-glow);
+    transform: translateY(-1px);
+  }
+
+  /* ─── MESSAGES ─── */
+  .messages {
+    max-width: 1100px;
+    margin: 5.5rem auto 0;
+    padding: 0 2rem;
+  }
+
+  .alert {
+    padding: 0.8rem 1.2rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .alert-success {
+    background: rgba(0, 212, 255, 0.1);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    color: var(--accent);
+  }
+
+  .alert-error {
+    background: rgba(255, 80, 80, 0.1);
+    border: 1px solid rgba(255, 80, 80, 0.3);
+    color: #ff6b6b;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 2rem;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    letter-spacing: 0.06em;
+  }
+
+  footer span { color: var(--text-muted); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .form-row { grid-template-columns: 1fr; }
+    .hero-name { font-size: 2.5rem; }
+  }
+
+  /* ─── ANIMATIONS ─── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-up.visible {
+    opacity: 1;
+    transform: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">asma<span>.</span>dev</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="{% url 'download_cv' %}" class="nav-cv">↓ CV</a>
+  </div>
+</nav>
+
+<!-- MESSAGES -->
+{% if messages %}
+<div class="messages">
+  {% for message in messages %}
+  <div class="alert {% if message.tags == 'success' %}alert-success{% else %}alert-error{% endif %}">
+    {{ message }}
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="neural-canvas"></canvas>
+  <div class="hero-content">
+    <p class="hero-eyebrow">AI Integration Engineer</p>
+    <h1 class="hero-name">Asma<br>Al-<span class="accent">Garably</span></h1>
+    <p class="hero-title">Building AI solutions that solve real-world problems.</p>
+    <p class="hero-bio">
+      Computer Science graduate from Al-Aqsa University with a focus on Artificial Intelligence and Machine Learning. Experienced in developing AI-powered applications across Natural Language Processing (NLP) and Retrieval-Augmented Generation (RAG). Skilled in integrating machine learning models into production-ready systems using Django, transforming research ideas into practical, user-focused solutions.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary"><i class="fas fa-code-branch"></i> View Projects</a>
+      <a href="{% url 'download_cv' %}" class="btn-outline"><i class="fas fa-file-arrow-down"></i> Download CV</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <i class="fas fa-chevron-down"></i>
+    <span>scroll</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text fade-up">
+        <p class="section-label">About</p>
+        <h2 class="section-title">Where AI meets<br><span>real impact</span></h2>
+        <p>
+         I'm an AI engineer focused on transforming advanced AI concepts into practical, real-world solutions. My work centers on building intelligent applications, integrating AI systems, and developing tools that solve meaningful problems.
+
+My experience includes NLP, Retrieval-Augmented Generation (RAG), and AI-powered applications. I focus on designing systems that not only leverage machine learning but also deliver tangible value to users.
+
+Among my projects are DIAVISION, an AI-powered healthcare platform for medical diagnostics, and a satellite imagery analysis system developed to assess building damage in Gaza's Al-Shati Refugee Camp, supporting humanitarian and data-driven decision-making.
+
+I believe technology creates its greatest impact when it is used to address real challenges and support communities that need it most.
+        </p>
+        <p>
+          My most meaningful project is <strong>DIAVISION</strong> — an AI-powered healthcare system
+          built to assist in medical diagnostics. I'm also developing a satellite imagery analysis
+          system to detect and assess building damage in Gaza's Al-Shati Refugee Camp,
+          combining humanitarian purpose with cutting-edge computer vision.
+        </p>
+        <p>
+          I believe the most valuable AI is the kind that serves communities that need it most.
+        </p>
+      </div>
+      <div class="about-stats fade-up">
+        <div class="stat-card">
+          <div class="stat-number">4+</div>
+          <div class="stat-label">AI/ML Projects Shipped</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">2</div>
+          <div class="stat-label">Deep Learning Architectures</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">RAG</div>
+          <div class="stat-label">Systems & NLP Pipelines</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">UiPath</div>
+          <div class="stat-label">Agent Hack 2026 Finalist</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <p class="section-label">Expertise</p>
+    <h2 class="section-title">Skills &amp; <span>Tech Stack</span></h2>
+    <div class="skills-grid">
+      {% for category, skill_list in skill_groups.items %}
+      <div class="skill-category fade-up">
+        <p class="skill-cat-title">{{ category }}</p>
+        {% for skill in skill_list %}
+        <div class="skill-item">
+          <div class="skill-row">
+            <span class="skill-name">{{ skill.name }}</span>
+            <span class="skill-pct">{{ skill.level }}%</span>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-fill" data-width="{{ skill.level }}"></div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% empty %}
+      <!-- Default skills if DB is empty -->
+      <div class="skill-category fade-up">
+        <p class="skill-cat-title">AI / ML</p>
+        {% for item in default_ai_skills %}
+        <div class="skill-item">
+          <div class="skill-row">
+            <span class="skill-name">{{ item.name }}</span>
+            <span class="skill-pct">{{ item.level }}%</span>
+          </div>
+          <div class="skill-bar"><div class="skill-fill" data-width="{{ item.level }}"></div></div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="skill-category fade-up">
+        <p class="skill-cat-title">Backend</p>
+        {% for item in default_backend_skills %}
+        <div class="skill-item">
+          <div class="skill-row">
+            <span class="skill-name">{{ item.name }}</span>
+            <span class="skill-pct">{{ item.level }}%</span>
+          </div>
+          <div class="skill-bar"><div class="skill-fill" data-width="{{ item.level }}"></div></div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="skill-category fade-up">
+        <p class="skill-cat-title">Frontend</p>
+        {% for item in default_frontend_skills %}
+        <div class="skill-item">
+          <div class="skill-row">
+            <span class="skill-name">{{ item.name }}</span>
+            <span class="skill-pct">{{ item.level }}%</span>
+          </div>
+          <div class="skill-bar"><div class="skill-fill" data-width="{{ item.level }}"></div></div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="skill-category fade-up">
+        <p class="skill-cat-title">Tools &amp; DevOps</p>
+        {% for item in default_tools_skills %}
+        <div class="skill-item">
+          <div class="skill-row">
+            <span class="skill-name">{{ item.name }}</span>
+            <span class="skill-pct">{{ item.level }}%</span>
+          </div>
+          <div class="skill-bar"><div class="skill-fill" data-width="{{ item.level }}"></div></div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <p class="section-label">Work</p>
+    <h2 class="section-title">Featured <span>Projects</span></h2>
+    <div class="projects-grid">
+      {% for project in projects %}
+      <a href="{{ project.github_url }}" target="_blank" class="project-card fade-up">
+        <div class="project-header">
+          <div class="project-icon"><i class="fas fa-brain"></i></div>
+          <div class="project-links">
+            <span class="project-link" title="GitHub"><i class="fab fa-github"></i></span>
+            {% if project.demo_url %}<span class="project-link" title="Demo"><i class="fas fa-external-link-alt"></i></span>{% endif %}
+          </div>
+        </div>
+        <h3 class="project-title">{{ project.title }}</h3>
+        <p class="project-desc">{{ project.description }}</p>
+        <div class="tech-stack">
+          {% for tech in project.get_tech_list %}
+          <span class="tech-tag">{{ tech }}</span>
+          {% endfor %}
+        </div>
+      </a>
+      {% empty %}
+   
+      <a href="https://github.com/asmaalgarably/Gaza-Satellite-Damage-Detection" target="_blank" class="project-card fade-up">
+        <div class="project-header">
+          <div class="project-icon"><i class="fas fa-satellite"></i></div>
+          <div class="project-links">
+            <span class="project-link"><i class="fab fa-github"></i></span>
+          </div>
+        </div>
+        <h3 class="project-title">Gaza Satellite Damage Detection</h3>
+        <p class="project-desc">Dual-model AI system using U-Net + EfficientNet-b4 for building damage detection and Mask R-CNN for footprint segmentation. Django + Leaflet.js frontend with damage overlays and cost estimates.</p>
+        <div class="tech-stack">
+          <span class="tech-tag">U-Net</span>
+          <span class="tech-tag">EfficientNet-b4</span>
+          <span class="tech-tag">Mask R-CNN</span>
+          <span class="tech-tag">Django</span>
+          <span class="tech-tag">Leaflet.js</span>
+        </div>
+      </a>
+      <a href="https://github.com/asmaalgarably/diabetes-prediction" target="_blank" class="project-card fade-up">
+        <div class="project-header">
+          <div class="project-icon"><i class="fas fa-heartbeat"></i></div>
+          <div class="project-links">
+            <span class="project-link"><i class="fab fa-github"></i></span>
+          </div>
+        </div>
+        <h3 class="project-title">DIAVISION — Healthcare AI System</h3>
+        <p class="project-desc">AI-powered diagnostic assistant leveraging deep learning for medical image analysis. Designed to support clinical decision-making with explainable AI outputs.</p>
+        <div class="tech-stack">
+          <span class="tech-tag">PyTorch</span>
+          <span class="tech-tag">CNN</span>
+          <span class="tech-tag">Django</span>
+          <span class="tech-tag">Computer Vision</span>
+        </div>
+      </a>
+      <a href="https://github.com/asmaalgarably/InvoiceX-Automation" target="_blank" class="project-card fade-up">
+        <div class="project-header">
+          <div class="project-icon"><i class="fas fa-robot"></i></div>
+          <div class="project-links">
+            <span class="project-link"><i class="fab fa-github"></i></span>
+          </div>
+        </div>
+        <h3 class="project-title">Agentic Minds — IDP Agent</h3>
+        <p class="project-desc">Intelligent Document Processing and Automation Agent built for UiPath AgentHack 2026. Extracts, classifies, and routes documents using LLMs and RPA automation.</p>
+        <div class="tech-stack">
+          <span class="tech-tag">UiPath</span>
+          <span class="tech-tag">Gemini API</span>
+          <span class="tech-tag">Django REST</span>
+          <span class="tech-tag">Supabase</span>
+        </div>
+      </a>
+      <a href="https://github.com/asmaalgarably" target="_blank" class="project-card fade-up">
+        <div class="project-header">
+          <div class="project-icon"><i class="fas fa-comments"></i></div>
+          <div class="project-links">
+            <span class="project-link"><i class="fab fa-github"></i></span>
+          </div>
+        </div>
+        <h3 class="project-title">RAG-Powered Knowledge Assistant</h3>
+        <p class="project-desc">Retrieval-Augmented Generation pipeline enabling semantic document Q&A. Built with LangChain, vector embeddings, and a custom Django REST backend.</p>
+        <div class="tech-stack">
+          <span class="tech-tag">RAG</span>
+          <span class="tech-tag">LangChain</span>
+          <span class="tech-tag">Embeddings</span>
+          <span class="tech-tag">Django REST</span>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <p class="section-label">Contact</p>
+    <h2 class="section-title">Let's <span>Connect</span></h2>
+    <div class="contact-grid">
+      <div class="contact-info fade-up">
+        <h3>Open to opportunities</h3>
+        <p>
+          I'm currently looking for AI Integration Engineer and Django Developer roles.
+          If you're building something meaningful with AI, I'd love to hear about it.
+        </p>
+        <div class="contact-links">
+          <a href="mailto:asmaalgarably@gmail.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+            asmaalgarably@gmail.com
+          </a>
+          <a href="https://linkedin.com/in/asma-algarably" target="_blank" class="contact-link">
+            <i class="fab fa-linkedin"></i>
+            linkedin.com/in/asma-algarably
+          </a>
+          <a href="https://github.com/asmaalgarably" target="_blank" class="contact-link">
+            <i class="fab fa-github"></i>
+            github.com/asmaalgarably
+          </a>
+          <a href="{% url 'download_cv' %}" class="contact-link">
+            <i class="fas fa-file-pdf"></i>
+            Download Resume (PDF)
+          </a>
+        </div>
+      </div>
+      <div class="fade-up">
+        <form method="POST" class="contact-form">
+          {% csrf_token %}
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" placeholder="Your name" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="your@email.com" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Tell me about your project..." required></textarea>
+          </div>
+          <button type="submit" class="btn-submit">Send Message →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>Asma Al-Garably</span> — Built with Django · Designed with intention · © 2026
+</footer>
+
+<script>
+// ── Neural Network Canvas Animation ──
+const canvas = document.getElementById('neural-canvas');
+const ctx = canvas.getContext('2d');
+let nodes = [], W, H;
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+
+function initNodes() {
+  nodes = [];
+  const count = Math.floor((W * H) / 14000);
+  for (let i = 0; i < count; i++) {
+    nodes.push({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      vx: (Math.random() - 0.5) * 0.35,
+      vy: (Math.random() - 0.5) * 0.35,
+      r: Math.random() * 1.8 + 0.6,
+    });
+  }
+}
+
+function drawFrame() {
+  ctx.clearRect(0, 0, W, H);
+  const accent = '0, 212, 255';
+  const maxDist = 140;
+
+  for (let i = 0; i < nodes.length; i++) {
+    const a = nodes[i];
+    a.x += a.vx; a.y += a.vy;
+    if (a.x < 0 || a.x > W) a.vx *= -1;
+    if (a.y < 0 || a.y > H) a.vy *= -1;
+
+    ctx.beginPath();
+    ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(${accent}, 0.7)`;
+    ctx.fill();
+
+    for (let j = i + 1; j < nodes.length; j++) {
+      const b = nodes[j];
+      const dx = a.x - b.x, dy = a.y - b.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < maxDist) {
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        ctx.strokeStyle = `rgba(${accent}, ${(1 - dist / maxDist) * 0.25})`;
+        ctx.lineWidth = 0.8;
+        ctx.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(drawFrame);
+}
+
+resize(); initNodes(); drawFrame();
+window.addEventListener('resize', () => { resize(); initNodes(); });
+
+// ── Scroll Animations ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      // Trigger skill bars
+      e.target.querySelectorAll('.skill-fill').forEach(bar => {
+        bar.style.width = bar.dataset.width + '%';
+      });
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// Trigger skill bars for initially visible elements too
+document.querySelectorAll('.skill-fill').forEach(bar => {
+  const rect = bar.getBoundingClientRect();
+  if (rect.top < window.innerHeight) {
+    setTimeout(() => bar.style.width = bar.dataset.width + '%', 300);
+  }
+});
+</script>
+
+</body>
+</html>
